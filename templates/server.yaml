@@ -16,6 +16,7 @@ spec:
       dnsPolicy: "None"
       dnsConfig:
         nameservers: ["127.0.0.53"]
+      serviceAccountName: {{ .Values.serviceAccount.name }}
       initContainers:
         - name: install-kernel-headers
           image: ubuntu:22.04
