@@ -13,7 +13,9 @@ spec:
         {{- include "kepler.selectorLabels" . | nindent 8 }}
     spec:
       hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
+      dnsPolicy: "None"
+      dnsConfig:
+        nameservers: ["127.0.0.53"]
       initContainers:
         - name: install-kernel-headers
           image: ubuntu:22.04
