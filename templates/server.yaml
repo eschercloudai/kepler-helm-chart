@@ -13,6 +13,18 @@ spec:
         {{- include "kepler.selectorLabels" . | nindent 8 }}
     spec:
       hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      initContainers:
+        - name: install-kernel-headers
+          image: ubuntu:22.04
+          command: ['/bin/sh']
+          args:
+            - -c
+            - |
+              /usr/bin/apt update
+              /usr/bin/apt install -y linux-headers-generic
+          securityContext:
+            privileged: true
       containers:
       - name: kepler-exporter
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
