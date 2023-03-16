@@ -1,0 +1,24 @@
+{{- if .Values.serviceMonitor.create }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  {{- if .Values.serviceMonitor.labels }}
+  labels:
+    {{- range $k, $v := .Values.serviceMonitor.labels }}
+    {{ $k }}: {{ $v }}
+    {{- end }}
+  {{- end }}
+  name: monitor-kepler-exporter
+  namespace: {{ .Values.serviceMonitor.namespace }}
+spec:
+  endpoints:
+  - interval: 15s
+    port: http
+    scheme: http
+  namespaceSelector:
+    matchNames:
+      - {{ .Values.global.namespace }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: exporter
+{{- end }}

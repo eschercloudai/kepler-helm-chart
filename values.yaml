@@ -31,6 +31,13 @@ podAnnotations: {}
 podSecurityContext: {}
   # fsGroup: 2000
 
+serviceMonitor:
+  create: true
+  namespace: prometheus
+  labels:
+    app.kubernetes.io/component: exporter
+    release: kube-prometheus-stack
+
 securityContext: {}
   # capabilities:
   #   drop:
